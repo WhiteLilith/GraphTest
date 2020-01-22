@@ -10,46 +10,93 @@ namespace Graph
             int stations_id = 0;
             int branch_id = 0;
 
-            string[] stationNamesGreen = {"Ховрино",
-                                    "Беломорская",
-                                    "Речной вокзал",
-                                    "Водный стадион",
-                                    "Войковская",
-                                    "Сокол",
-                                    "Аэропорт",
-                                    "Динамо",
-                                    "Белорусская",
-                                    "Маяковская",
-                                    "Тверская",
-                                    "Горьковская",
-                                    "Театральная",
-                                    "Площадь Свердлова",
-                                    "Новокузнецкая",
-                                    "Павелецкая",
-                                    "Автозаводская",
-                                    "Завод имени Сталина",
-                                    "Технопарк",
-                                    "Коломенская",
-                                    "Каширская",
-                                    "Кантемировская",
-                                    "Царицыно",
-                                    "Ленино",
-                                    "Орехово",
-                                    "Домодедовская",
-                                    "Красногвардейская",
-                                    "Алма - Атинская" };
+            string[] stationNamesGreen = 
+            {
+                "Ховрино",
+                "Беломорская",
+                "Речной вокзал",
+                "Водный стадион",
+                "Войковская",
+                "Сокол",
+                "Аэропорт",
+                "Динамо",
+                "Белорусская",
+                "Маяковская",
+                "Тверская",
+                "Горьковская",
+                "Театральная",
+                "Площадь Свердлова",
+                "Новокузнецкая",
+                "Павелецкая",
+                "Автозаводская",
+                "Завод имени Сталина",
+                "Технопарк",
+                "Коломенская",
+                "Каширская",
+                "Кантемировская",
+                "Царицыно",
+                "Ленино",
+                "Орехово",
+                "Домодедовская",
+                "Красногвардейская",
+                "Алма - Атинская" 
+            };
 
+            string[] stationsNamesRed =
+            {
+                "Бульвар Рокоссовского",
+                "Черкизовская",
+                "Преображенская площадь",
+                "Сокольники",
+                "Красносельская",
+                "Комсомольская",
+                "Красные Ворота",
+                "Чистые пруды",
+                "Лубянка",
+                "Охотный Ряд",
+                "Библиотека имени Ленина",
+                "Кропоткинская",
+                "Парк культуры",
+                "Фрунзенская",
+                "Спортивная",
+                "Воробьёвы горы",
+                "Университет",
+                "Проспект Вернадского",
+                "Юго-Западная",
+                "Тропарёво",
+                "Румянцево",
+                "Саларьево",
+                "Филатов луг",
+                "Прокшино",
+                "Ольховая",
+                "Коммунарка"
+            };
+            
             IBranch stationsGreenBranch = CreateBranch(stationNamesGreen, "Замоскворецкая линия", 
                                             "green", ref branch_id, ref stations_id);
+            IBranch stationsRedBranch = CreateBranch(stationsNamesRed, "Сокольническая линия",
+                                            "red", ref branch_id, ref stations_id);
 
-            ShowConnectedStations(stationsGreenBranch, "Алма - Атинская");
+            stationsGreenBranch.ConnectBranches(stationsRedBranch.GetStationByName("Охотный Ряд"),
+                stationsGreenBranch.GetStationByName("Театральная"));
+
+            ShowConnectedStations(stationsRedBranch, "Охотный Ряд");
         }
 
+        /// <summary>
+        /// Создание ветки
+        /// </summary>
+        /// <param name="stations"></param>
+        /// <param name="branchName"></param>
+        /// <param name="branchColor"></param>
+        /// <param name="branchID"></param>
+        /// <param name="stationsID"></param>
+        /// <returns></returns>
         static IBranch CreateBranch(string[] stations, string branchName, 
             string branchColor, ref int branchID, ref int stationsID)
         {
             List<IStation> stationsBranch = new List<IStation>(0);
-            for (int i = stationsID; i < stations.Length; i++, stationsID++)
+            for (int i = 0; i < stations.Length; i++, stationsID++)
             {
                 stationsBranch.Add(new Station(stations[i], stationsID.ToString()));
                 if (i > 0)
@@ -63,6 +110,11 @@ namespace Graph
             return branch;
         }
 
+        /// <summary>
+        /// Показ станция, с которыми соединенна текущаяя станция
+        /// </summary>
+        /// <param name="branch"></param>
+        /// <param name="stationName"></param>
         static void ShowConnectedStations(IBranch branch, string stationName)
         {
             List<IStation> stations = branch.GetStationByName(stationName).GetConnectedStations();

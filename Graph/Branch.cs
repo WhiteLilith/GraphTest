@@ -21,10 +21,7 @@ namespace Graph
 
         public void ConnectBranches(IStation firstStation, IStation secondStation)
         {
-            foreach(IStation station in firstStation.GetConnectedStations())
-            {
-                secondStation.ConnectStation(station, true);
-            }
+            firstStation.ConnectStation(secondStation, true);
         }
 
         public IStation GetStationByID(string id)
