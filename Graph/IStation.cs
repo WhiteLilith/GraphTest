@@ -12,6 +12,8 @@ namespace Graph
 
         void ConnectStation(IStation station, bool isViceVersa);
 
+        bool IsEndStation();
+
         List<IStation> GetConnectedStations();
     }
 }

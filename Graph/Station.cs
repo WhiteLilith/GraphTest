@@ -9,11 +9,13 @@ namespace Graph
         private List<IStation> ConnectedStations;
         private string name;
         private string id;
+        private bool isEnd;
 
-        public Station(string name, string id)
+        public Station(string name, string id, bool isEnd)
         {
             this.name = name;
             this.id = id;
+            this.isEnd = isEnd;
             ConnectedStations = new List<IStation>(0);
         }
 
@@ -39,6 +41,11 @@ namespace Graph
         public List<IStation> GetConnectedStations()
         {
             return ConnectedStations;
+        }
+
+        public bool IsEndStation()
+        {
+            return isEnd;
         }
     }
 }

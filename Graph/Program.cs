@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Graph
 {
@@ -80,7 +81,16 @@ namespace Graph
             stationsGreenBranch.ConnectBranches(stationsRedBranch.GetStationByName("Охотный Ряд"),
                 stationsGreenBranch.GetStationByName("Театральная"));
 
-            ShowConnectedStations(stationsRedBranch, "Охотный Ряд");
+            // ShowConnectedStations(stationsRedBranch, "Охотный Ряд");
+
+            IPathFinder pathFinder = new PathFinder();
+            List<IStation> path = pathFinder.FindPath(stationsGreenBranch.GetStationByName("Царицыно"), 
+                stationsGreenBranch.GetStationByName("Коломенская"), null);
+
+            foreach(var station in path)
+            {
+                Console.WriteLine(station.GetStationName(), "\n");
+            }
         }
 
         /// <summary>
@@ -98,7 +108,14 @@ namespace Graph
             List<IStation> stationsBranch = new List<IStation>(0);
             for (int i = 0; i < stations.Length; i++, stationsID++)
             {
-                stationsBranch.Add(new Station(stations[i], stationsID.ToString()));
+                if (i == 0 || i == stations.Length)
+                {
+                    stationsBranch.Add(new Station(stations[i], stationsID.ToString(), true));
+                }
+                else
+                {
+                    stationsBranch.Add(new Station(stations[i], stationsID.ToString(), false));
+                }
                 if (i > 0)
                 {
                     stationsBranch[i - 1].ConnectStation(stationsBranch[i], true);
