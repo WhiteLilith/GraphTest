@@ -30,16 +30,6 @@ namespace Graph
                     return path;
                 }
 
-                foreach(var station in stationFrom_.GetConnectedStations())
-                {
-                    if (IsStationIsNeighboor(station, stationTo) != null)
-                    {
-                        path.Add(station);
-                        path.Add(stationTo);
-                        return path;
-                    }
-                }
-
                 if (!IsHistoryContains(searchHistory, stationFrom_))
                 {
                     searchHistory.Add(stationFrom_);
@@ -47,8 +37,7 @@ namespace Graph
 
                 for (int i = 0; i < stationFrom_.GetConnectedStations().Count; i++)
                 {
-                    if (!stationFrom_.GetConnectedStations()[i].IsEndStation() && 
-                        !IsHistoryContains(searchHistory, stationFrom_.GetConnectedStations()[i]))
+                    if (!IsHistoryContains(searchHistory, stationFrom_.GetConnectedStations()[i]))
                     {
                         stationFrom_ = stationFrom_.GetConnectedStations()[i];
                         path.Add(stationFrom_);
