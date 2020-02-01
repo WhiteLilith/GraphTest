@@ -39,14 +39,28 @@ namespace Graph
                         return path;
                     }
                 }
-                for(int i = 0; i < stationFrom_.GetConnectedStations().Count; i++)
+
+                if (!IsHistoryContains(searchHistory, stationFrom_))
                 {
                     searchHistory.Add(stationFrom_);
-                    if (stationFrom_.GetConnectedStations()[i].IsEndStation() != false && 
-                        !searchHistory.Contains(stationFrom_.GetConnectedStations()[i]))
+                }
+
+                for (int i = 0; i < stationFrom_.GetConnectedStations().Count; i++)
+                {
+                    if (!stationFrom_.GetConnectedStations()[i].IsEndStation() && 
+                        !IsHistoryContains(searchHistory, stationFrom_.GetConnectedStations()[i]))
                     {
                         stationFrom_ = stationFrom_.GetConnectedStations()[i];
+                        path.Add(stationFrom_);
+                        break;
                     }
+                }
+
+                if(stationFrom_.IsEndStation() && searchHistory.Contains(stationFrom_.GetConnectedStations()[0]))
+                {
+                    path.Clear();
+                    stationFrom_ = stationFrom;
+                    path.Add(stationFrom_);
                 }
             }
         }
@@ -61,6 +75,19 @@ namespace Graph
                 }
             }
             return null;
+        }
+
+        private bool IsHistoryContains(List<IStation> stations, IStation station)
+        {
+            foreach(IStation stat in stations)
+            {
+                if(stat.GetStationID() == station.GetStationID())
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
