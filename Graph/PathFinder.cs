@@ -66,6 +66,7 @@ namespace Graph
                             if(!IsNeighboorStationsIsVisited(searchHistory, station))
                             {
                                 stationFrom_ = station;
+                                path = FindPath(stationFrom, stationFrom_, null);
                             }
                         }
                     }

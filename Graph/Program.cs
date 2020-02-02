@@ -26,11 +26,9 @@ namespace Graph
                 "Тверская",
                 "Горьковская",
                 "Театральная",
-                "Площадь Свердлова",
                 "Новокузнецкая",
                 "Павелецкая",
                 "Автозаводская",
-                "Завод имени Сталина",
                 "Технопарк",
                 "Коломенская",
                 "Каширская",
@@ -85,7 +83,7 @@ namespace Graph
 
             IPathFinder pathFinder = new PathFinder();
             List<IStation> path = pathFinder.FindPath(stationsGreenBranch.GetStationByName("Царицыно"), 
-                stationsRedBranch.GetStationByName("Воробьёвы горы"), null);
+                stationsRedBranch.GetStationByName("Бульвар Рокоссовского"), null);
 
             foreach(var station in path)
             {
