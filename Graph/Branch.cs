@@ -19,7 +19,7 @@ namespace Graph
             this.stations = stations;
         }
 
-        public void ConnectBranches(IStation firstStation, IStation secondStation)
+        static public void ConnectBranches(IStation firstStation, IStation secondStation)
         {
             firstStation.ConnectStation(secondStation, true);
         }

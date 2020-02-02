@@ -71,7 +71,7 @@ namespace Graph
                 "Коммунарка"
             };
 
-            string[] stationNamesBlue =
+            string[] stationsNamesBlue =
             {
                 "Пятницкое шоссе",
                 "Митино",
@@ -96,27 +96,67 @@ namespace Graph
                 "Первомайская",
                 "Щёлковская"
             };
+
+            string[] stationsNamesBrown =
+            {
+                "Парк культуры",
+                "Октябрьская",
+                "Добрынинская",
+                "Павелецкая",
+                "Таганская",
+                "Курская",
+                "Комсомольская",
+                "Проспект Мира",
+                "Новослободская",
+                "Белорусская",
+                "Краснопресненская",
+                "Киевская"
+            };
+
             
             IBranch stationsGreenBranch = CreateBranch(stationNamesGreen, "Замоскворецкая линия", 
                                             "green", ref branch_id, ref stations_id);
             IBranch stationsRedBranch = CreateBranch(stationsNamesRed, "Сокольническая линия",
                                             "red", ref branch_id, ref stations_id);
-            IBranch stationsBlueBranch = CreateBranch(stationNamesBlue, "Арбатско-покровская линия",
+            IBranch stationsBlueBranch = CreateBranch(stationsNamesBlue, "Арбатско-покровская линия",
                                             "blue", ref branch_id, ref stations_id);
+            IBranch stationsBrownBranch = CreateBranch(stationsNamesBrown, "Кольцевая линия",
+                                            "brown", ref branch_id, ref stations_id);
 
-            stationsGreenBranch.ConnectBranches(stationsRedBranch.GetStationByName("Охотный Ряд"),
-                stationsGreenBranch.GetStationByName("Театральная"));
-            stationsGreenBranch.ConnectBranches(stationsBlueBranch.GetStationByName("Площадь Революции"),
+            Branch.ConnectBranches(stationsRedBranch.GetStationByName("Охотный Ряд"),
                 stationsGreenBranch.GetStationByName("Театральная"));
 
-            stationsRedBranch.ConnectBranches(stationsRedBranch.GetStationByName("Библиотека имени Ленина"),
+            Branch.ConnectBranches(stationsBlueBranch.GetStationByName("Площадь Революции"),
+                stationsGreenBranch.GetStationByName("Театральная"));
+
+            Branch.ConnectBranches(stationsRedBranch.GetStationByName("Библиотека имени Ленина"),
                 stationsBlueBranch.GetStationByName("Арбатская"));
 
+            
+            Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Парк культуры"),
+                stationsRedBranch.GetStationByName("Парк культуры"));
+
+            Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Павелецкая"),
+                stationsGreenBranch.GetStationByName("Павелецкая"));
+
+            Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Курская"),
+                stationsBlueBranch.GetStationByName("Курская"));
+            
+            Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Комсомольская"),
+                stationsRedBranch.GetStationByName("Комсомольская"));
+            
+            Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Белорусская"),
+                stationsGreenBranch.GetStationByName("Белорусская"));
+            
+            Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Киевская"),
+                stationsBlueBranch.GetStationByName("Киевская"));
+               
             // ShowConnectedStations(stationsRedBranch, "Охотный Ряд");
 
             IPathFinder pathFinder = new PathFinder();
-            List<IStation> path = pathFinder.FindPath(stationsGreenBranch.GetStationByName("Царицыно"), 
-                stationsBlueBranch.GetStationByName("Щёлковская"), null);
+            
+            List<IStation> path = pathFinder.FindPath(stationsBlueBranch.GetStationByName("Щёлковская"),
+                stationsGreenBranch.GetStationByName("Царицыно"), null);
 
             foreach(var station in path)
             {

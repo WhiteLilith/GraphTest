@@ -10,6 +10,9 @@ namespace Graph
 
         IStation GetStationByName(string name);
 
-        void ConnectBranches(IStation firstStation, IStation secondStation);
+        static void ConnectBranches(IStation firstStation, IStation secondStation)
+        {
+
+        }
     }
 }

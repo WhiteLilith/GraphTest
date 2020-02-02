@@ -18,6 +18,7 @@ namespace Graph
             List<IStation> path = new List<IStation>();
             List<IStation> searchHistory = new List<IStation>();
             List<IStation> transitStations = new List<IStation>();
+
             IStation stationFrom_, pastStation_;
             stationFrom_ = stationFrom;
 
@@ -59,6 +60,7 @@ namespace Graph
                     {
                         stationFrom_ = stationFrom;
                     }
+                    
                     else
                     {
                         foreach(var station in transitStations)
@@ -70,7 +72,7 @@ namespace Graph
                             }
                         }
                     }
-
+                    
                     path.Add(stationFrom_);
                     continue;
                 }
