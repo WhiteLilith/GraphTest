@@ -85,7 +85,7 @@ namespace Graph
 
             IPathFinder pathFinder = new PathFinder();
             List<IStation> path = pathFinder.FindPath(stationsGreenBranch.GetStationByName("Царицыно"), 
-                stationsGreenBranch.GetStationByName("Алма - Атинская"), null);
+                stationsRedBranch.GetStationByName("Воробьёвы горы"), null);
 
             foreach(var station in path)
             {

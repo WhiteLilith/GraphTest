@@ -17,6 +17,7 @@ namespace Graph
         {
             List<IStation> path = new List<IStation>();
             List<IStation> searchHistory = new List<IStation>();
+            List<IStation> transitStations = new List<IStation>();
             IStation stationFrom_, pastStation_;
             stationFrom_ = stationFrom;
 
@@ -35,6 +36,11 @@ namespace Graph
                     searchHistory.Add(stationFrom_);
                 }
 
+                if(stationFrom_.GetConnectedStations().Count > 2)
+                {
+                    transitStations.Add(stationFrom_);
+                }
+
                 for (int i = 0; i < stationFrom_.GetConnectedStations().Count; i++)
                 {
                     if (!IsHistoryContains(searchHistory, stationFrom_.GetConnectedStations()[i]))
@@ -45,11 +51,27 @@ namespace Graph
                     }
                 }
 
-                if(stationFrom_.IsEndStation() && searchHistory.Contains(stationFrom_.GetConnectedStations()[0]))
+                if (stationFrom_.IsEndStation() || IsNeighboorStationsIsVisited(searchHistory, stationFrom_))
                 {
                     path.Clear();
-                    stationFrom_ = stationFrom;
+
+                    if(!IsNeighboorStationsIsVisited(searchHistory, stationFrom))
+                    {
+                        stationFrom_ = stationFrom;
+                    }
+                    else
+                    {
+                        foreach(var station in transitStations)
+                        {
+                            if(!IsNeighboorStationsIsVisited(searchHistory, station))
+                            {
+                                stationFrom_ = station;
+                            }
+                        }
+                    }
+
                     path.Add(stationFrom_);
+                    continue;
                 }
             }
         }
@@ -77,6 +99,20 @@ namespace Graph
             }
 
             return false;
+        }
+
+        private bool IsNeighboorStationsIsVisited(List<IStation> searchHistory, IStation stationFrom)
+        {
+            foreach(var station in stationFrom.GetConnectedStations())
+            {
+                if(IsHistoryContains(searchHistory, station))
+                {
+                    continue;
+                }
+                return false;
+            }
+
+            return true;
         }
     }
 }
