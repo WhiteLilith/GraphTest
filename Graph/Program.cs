@@ -70,20 +70,53 @@ namespace Graph
                 "Ольховая",
                 "Коммунарка"
             };
+
+            string[] stationNamesBlue =
+            {
+                "Пятницкое шоссе",
+                "Митино",
+                "Волоколамская",
+                "Мякинино",
+                "Строгино",
+                "Крылатское",
+                "Молодёжная",
+                "Кунцевская",
+                "Славянский бульвар",
+                "Парк Победы",
+                "Киевская",
+                "Смоленская",
+                "Арбатская",
+                "Площадь Революции",
+                "Курская",
+                "Бауманская",
+                "Электрозаводская",
+                "Семёновская",
+                "Партизанская",
+                "Измайловская",
+                "Первомайская",
+                "Щёлковская"
+            };
             
             IBranch stationsGreenBranch = CreateBranch(stationNamesGreen, "Замоскворецкая линия", 
                                             "green", ref branch_id, ref stations_id);
             IBranch stationsRedBranch = CreateBranch(stationsNamesRed, "Сокольническая линия",
                                             "red", ref branch_id, ref stations_id);
+            IBranch stationsBlueBranch = CreateBranch(stationNamesBlue, "Арбатско-покровская линия",
+                                            "blue", ref branch_id, ref stations_id);
 
             stationsGreenBranch.ConnectBranches(stationsRedBranch.GetStationByName("Охотный Ряд"),
                 stationsGreenBranch.GetStationByName("Театральная"));
+            stationsGreenBranch.ConnectBranches(stationsBlueBranch.GetStationByName("Площадь Революции"),
+                stationsGreenBranch.GetStationByName("Театральная"));
+
+            stationsRedBranch.ConnectBranches(stationsRedBranch.GetStationByName("Библиотека имени Ленина"),
+                stationsBlueBranch.GetStationByName("Арбатская"));
 
             // ShowConnectedStations(stationsRedBranch, "Охотный Ряд");
 
             IPathFinder pathFinder = new PathFinder();
             List<IStation> path = pathFinder.FindPath(stationsGreenBranch.GetStationByName("Царицыно"), 
-                stationsRedBranch.GetStationByName("Бульвар Рокоссовского"), null);
+                stationsBlueBranch.GetStationByName("Щёлковская"), null);
 
             foreach(var station in path)
             {
