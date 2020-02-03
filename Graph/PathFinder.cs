@@ -6,6 +6,17 @@ using System.Threading.Tasks;
 
 namespace Graph
 {
+    /// <summary>
+    /// 
+    /// 
+    /// 
+    /// 
+    /// СТАРАЯ ВЕРСИЯ!!!!!!!!!!!!!!!!!!!
+    /// 
+    /// 
+    /// 
+    /// 
+    /// </summary>
     class PathFinder : IPathFinder
     {  
         public PathFinder()
