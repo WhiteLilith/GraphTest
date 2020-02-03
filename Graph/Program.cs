@@ -122,6 +122,8 @@ namespace Graph
                                             "blue", ref branch_id, ref stations_id);
             IBranch stationsBrownBranch = CreateBranch(stationsNamesBrown, "Кольцевая линия",
                                             "brown", ref branch_id, ref stations_id);
+            stationsBrownBranch.GetStationByName("Парк культуры").ConnectStation(stationsBrownBranch.GetStationByName("Киевская"), true);
+
 
             Branch.ConnectBranches(stationsRedBranch.GetStationByName("Охотный Ряд"),
                 stationsGreenBranch.GetStationByName("Театральная"));
@@ -150,10 +152,11 @@ namespace Graph
             
             Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Киевская"),
                 stationsBlueBranch.GetStationByName("Киевская"));
+                
                
             // ShowConnectedStations(stationsRedBranch, "Охотный Ряд");
 
-            IPathFinder pathFinder = new PathFinder();
+            IPathFinder pathFinder = new WidthSearch();
             
             List<IStation> path = pathFinder.FindPath(stationsBlueBranch.GetStationByName("Щёлковская"),
                 stationsGreenBranch.GetStationByName("Царицыно"), null);
