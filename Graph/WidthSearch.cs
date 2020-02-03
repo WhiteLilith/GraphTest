@@ -12,6 +12,8 @@ namespace Graph
             List<IStation> searched = new List<IStation>();
             List<IStation> path = new List<IStation>();
 
+            List<IStation> temp;
+
             IStation stationFrom_Temp = stationFrom;
 
             AddToQueue(ref searchQueue, stationFrom_Temp);
@@ -30,7 +32,17 @@ namespace Graph
                     {
                         AddToQueue(ref searchQueue, stationFrom_Temp);
                         searched.Add(stationFrom_Temp);
-                        path.Add(stationFrom_Temp);
+
+                        
+                        temp = TransformFromQueueToList(searchQueue);
+                        foreach (IStation station in temp)
+                        {
+                            if(!IsContains(searched, station) && !IsContains(path, station))
+                            {
+                                path.Add(station);
+                            }
+                        }
+                        
                     }
                 }
             }
@@ -48,12 +60,15 @@ namespace Graph
 
         private List<IStation> TransformFromQueueToList(Queue<IStation> searchQueue)
         {
+            IStation[] tempQueue = new Station[searchQueue.Count];
+            searchQueue.CopyTo(tempQueue, 0);
+
             List<IStation> path = new List<IStation>();
             IStation temp;
-            while(searchQueue.Count > 0)
+
+            for(int i = tempQueue.Length - 1; i >= 0; i--)
             {
-                temp = searchQueue.Dequeue();
-                path.Add(temp);
+                path.Add(tempQueue[i]);
             }
             return path;
         }
