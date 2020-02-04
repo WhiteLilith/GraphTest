@@ -149,14 +149,21 @@ namespace Graph
             
             Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Киевская"),
                 stationsBlueBranch.GetStationByName("Киевская"));
-                
-               
+
+
+            IUnderground underground = new Undeground();
+            underground.AddBranch(stationsBlueBranch);
+            underground.AddBranch(stationsBrownBranch);
+            underground.AddBranch(stationsGreenBranch);
+            underground.AddBranch(stationsRedBranch);
+
             // ShowConnectedStations(stationsRedBranch, "Охотный Ряд");
 
             IPathFinder pathFinder = new BreadthFirstSearch();
-            
-            List<IStation> path = pathFinder.FindPath(stationsBlueBranch.GetStationByName("Щёлковская"),
-                stationsGreenBranch.GetStationByName("Царицыно"));
+
+            Console.Read();
+            List<IStation> path = pathFinder.FindPath(Undeground.GetStationByName("Щёлковская"),
+                Undeground.GetStationByName("Царицыно"));
 
             foreach(var station in path)
             {

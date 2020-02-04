@@ -14,5 +14,7 @@ namespace Graph
         {
 
         }
+
+        List<IStation> GetAllStations();
     }
 }

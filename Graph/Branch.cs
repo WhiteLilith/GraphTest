@@ -44,7 +44,7 @@ namespace Graph
                     return station;
                 }
             }
-            throw new IndexOutOfRangeException();
+            return null;
         }
 
         public IStation GetStationByName(string name)
@@ -56,7 +56,7 @@ namespace Graph
                     return station;
                 }
             }
-            throw new IndexOutOfRangeException();
+            return null;
         }
 
         public string GetBranchName()
@@ -102,6 +102,11 @@ namespace Graph
                 }
             }
             this.stations = stationsBranch;
+        }
+
+        List<IStation> GetAllStations()
+        {
+            return stations;
         }
     }
 }
