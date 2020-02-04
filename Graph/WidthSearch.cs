@@ -10,45 +10,48 @@ namespace Graph
         {
             Queue<IStation> searchQueue = new Queue<IStation>();
             List<IStation> searched = new List<IStation>();
-            List<IStation> path = new List<IStation>();
 
-            List<IStation> temp;
+            ITempStationsContainer pathContainer = new StationsContainer();
+            int currentLevel = 0;
 
             IStation stationFrom_Temp = stationFrom;
 
-            AddToQueue(ref searchQueue, stationFrom_Temp);
+            searchQueue.Enqueue(stationFrom_Temp);
+            searched.Add(stationFrom_Temp);
+            pathContainer.AddToContainer(stationFrom_Temp, currentLevel);
+
+            bool IsPathFound = false;
+
             while (searchQueue.Count > 0)
             {
-                stationFrom_Temp = searchQueue.Peek();
-                searchQueue.Dequeue();
+                stationFrom_Temp = searchQueue.Dequeue();
+                
 
-                if(!IsContains(searched, stationFrom_Temp))
+                foreach(IStation station in stationFrom_Temp.GetConnectedStations())
                 {
-                    if (stationFrom_Temp.GetStationID() == stationTo.GetStationID())
+                    if (!IsContains(searched, station))
                     {
-                        return path;
-                    }
-                    else
-                    {
-                        AddToQueue(ref searchQueue, stationFrom_Temp);
-                        searched.Add(stationFrom_Temp);
-
-                        
-                        temp = TransformFromQueueToList(searchQueue);
-                        foreach (IStation station in temp)
+                        if (station.GetStationID() == stationTo.GetStationID())
                         {
-                            if(!IsContains(searched, station) && !IsContains(path, station))
-                            {
-                                path.Add(station);
-                            }
+                            IsPathFound = true;
                         }
-                        
+                        else
+                        {
+                            searchQueue.Enqueue(station);
+                            searched.Add(station);
+                            pathContainer.AddToContainer(station, SetStationLevel(pathContainer, station, currentLevel));
+                        }
                     }
                 }
+
+                if (IsPathFound) break;
             }
-            return null;
+
+
+            return FormPath(pathContainer, stationTo, stationFrom, currentLevel);
         }
 
+        /*
         private void AddToQueue(ref Queue<IStation> searchQueue, IStation stationToAdd)
         {
             List<IStation> neighboorStations = stationToAdd.GetConnectedStations();
@@ -57,6 +60,7 @@ namespace Graph
                 searchQueue.Enqueue(station);
             }
         }
+        */
 
         private List<IStation> TransformFromQueueToList(Queue<IStation> searchQueue)
         {
@@ -83,6 +87,55 @@ namespace Graph
                 }
             }
             return false;
+        }
+
+        private List<IStation> FormPath(ITempStationsContainer container, IStation stationTo, IStation stationFrom, int currentLevel)
+        {
+            int level = currentLevel;
+            List<IStation> path = new List<IStation>();
+            List<IStation> tempStationsList = new List<IStation>();
+            IStation stationTemp = stationTo;
+            bool IsStationFound = false;
+
+            while (level > 0)
+            {
+                IsStationFound = false;
+                tempStationsList = container.GetStationsFromLevel(currentLevel);
+
+                foreach(IStation station in tempStationsList)
+                {
+                    if (IsStationFound)
+                    {
+                        break;
+                    }
+
+                    foreach (IStation stat in stationTemp.GetConnectedStations())
+                    {
+                        if(station.GetStationID() == stat.GetStationID())
+                        {
+                            stationTemp = station;
+                            IsStationFound = true;
+                        }
+                    }
+                }
+                path.Add(stationTemp);
+
+                level--;
+            }
+
+            return path;
+        }
+
+        private int SetStationLevel(ITempStationsContainer container, IStation currentStation, int currentLevel)
+        {
+            foreach(IStation station in currentStation.GetConnectedStations())
+            {
+                if(container.GetLevelOfStation(station) != -1)
+                {
+                    return container.GetLevelOfStation(station) + 1;
+                }
+            }
+            return currentLevel++;
         }
     }
 }
