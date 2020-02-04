@@ -49,7 +49,7 @@ namespace Graph
             }
 
 
-            return FormPath(pathContainer, stationTo, stationFrom, currentLevel);
+            return FormPath(pathContainer, stationTo, currentLevel);
         }
 
         /*
@@ -90,7 +90,7 @@ namespace Graph
             return false;
         }
 
-        private List<IStation> FormPath(ITempStationsContainer container, IStation stationTo, IStation stationFrom, int currentLevel)
+        private List<IStation> FormPath(ITempStationsContainer container, IStation stationTo, int currentLevel)
         {
             int level = currentLevel;
             List<IStation> path = new List<IStation>();
@@ -101,7 +101,7 @@ namespace Graph
             while (level > 0)
             {
                 IsStationFound = false;
-                tempStationsList = container.GetStationsFromLevel(currentLevel);
+                tempStationsList = container.GetStationsFromLevel(level);
 
                 foreach(IStation station in tempStationsList)
                 {
@@ -114,7 +114,7 @@ namespace Graph
                     {
                         if(station.GetStationID() == stat.GetStationID())
                         {
-                            stationTemp = station;
+                            stationTemp = stat;
                             IsStationFound = true;
                         }
                     }
