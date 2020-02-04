@@ -156,7 +156,7 @@ namespace Graph
                
             // ShowConnectedStations(stationsRedBranch, "Охотный Ряд");
 
-            IPathFinder pathFinder = new WidthSearch();
+            IPathFinder pathFinder = new BreadthFirstSearch();
             
             List<IStation> path = pathFinder.FindPath(stationsBlueBranch.GetStationByName("Щёлковская"),
                 stationsGreenBranch.GetStationByName("Царицыно"), null);

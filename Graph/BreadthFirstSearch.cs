@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Graph
 {
-    class WidthSearch : IPathFinder
+    class BreadthFirstSearch : IPathFinder
     {
         public List<IStation> FindPath(IStation stationFrom, IStation stationTo, IStation pastStation)
         {
@@ -49,19 +49,8 @@ namespace Graph
             }
 
 
-            return FormPath(pathContainer, stationTo, currentLevel);
+            return FormPath(pathContainer, stationFrom, stationTo, currentLevel);
         }
-
-        /*
-        private void AddToQueue(ref Queue<IStation> searchQueue, IStation stationToAdd)
-        {
-            List<IStation> neighboorStations = stationToAdd.GetConnectedStations();
-            foreach(var station in neighboorStations)
-            {
-                searchQueue.Enqueue(station);
-            }
-        }
-        */
 
         private List<IStation> TransformFromQueueToList(Queue<IStation> searchQueue)
         {
@@ -90,7 +79,7 @@ namespace Graph
             return false;
         }
 
-        private List<IStation> FormPath(ITempStationsContainer container, IStation stationTo, int currentLevel)
+        private List<IStation> FormPath(ITempStationsContainer container, IStation stationFrom, IStation stationTo, int currentLevel)
         {
             int level = currentLevel;
             List<IStation> path = new List<IStation>();
@@ -123,6 +112,7 @@ namespace Graph
 
                 level--;
             }
+            path.Add(stationFrom);
 
             return path;
         }
