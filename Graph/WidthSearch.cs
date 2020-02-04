@@ -39,7 +39,8 @@ namespace Graph
                         {
                             searchQueue.Enqueue(station);
                             searched.Add(station);
-                            pathContainer.AddToContainer(station, SetStationLevel(pathContainer, station, currentLevel));
+                            currentLevel = SetStationLevel(pathContainer, station, currentLevel);
+                            pathContainer.AddToContainer(station, currentLevel);
                         }
                     }
                 }
