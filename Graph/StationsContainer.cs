@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Graph
 {
+    /// <summary>
+    /// Класс для содержания станций и соответствующие им уровни
+    /// </summary>
     class StationsContainer : ITempStationsContainer
     {
         private List<IStation> stations;

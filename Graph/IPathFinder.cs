@@ -6,6 +6,6 @@ namespace Graph
 {
     interface IPathFinder
     {
-        List<IStation> FindPath(IStation stationFrom, IStation stationTo, IStation pastStation);
+        List<IStation> FindPath(IStation stationFrom, IStation stationTo);
     }
 }

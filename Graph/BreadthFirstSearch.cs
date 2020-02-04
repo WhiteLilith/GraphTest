@@ -6,7 +6,14 @@ namespace Graph
 {
     class BreadthFirstSearch : IPathFinder
     {
-        public List<IStation> FindPath(IStation stationFrom, IStation stationTo, IStation pastStation)
+        /// <summary>
+        /// Ищет путь от станции А к станции Б
+        /// </summary>
+        /// <param name="stationFrom"></param>
+        /// <param name="stationTo"></param>
+        /// <param name="pastStation"></param>
+        /// <returns></returns>
+        public List<IStation> FindPath(IStation stationFrom, IStation stationTo)
         {
             Queue<IStation> searchQueue = new Queue<IStation>();
             List<IStation> searched = new List<IStation>();
@@ -52,21 +59,12 @@ namespace Graph
             return FormPath(pathContainer, stationFrom, stationTo, currentLevel);
         }
 
-        private List<IStation> TransformFromQueueToList(Queue<IStation> searchQueue)
-        {
-            IStation[] tempQueue = new Station[searchQueue.Count];
-            searchQueue.CopyTo(tempQueue, 0);
-
-            List<IStation> path = new List<IStation>();
-            IStation temp;
-
-            for(int i = tempQueue.Length - 1; i >= 0; i--)
-            {
-                path.Add(tempQueue[i]);
-            }
-            return path;
-        }
-
+        /// <summary>
+        /// Проверяет, содержит ли список станция указанную станцию
+        /// </summary>
+        /// <param name="stationsList"></param>
+        /// <param name="stationToCheck"></param>
+        /// <returns></returns>
         private bool IsContains(List<IStation> stationsList, IStation stationToCheck)
         {
             foreach(IStation station in stationsList)
@@ -79,6 +77,14 @@ namespace Graph
             return false;
         }
 
+        /// <summary>
+        /// Возвращает кратчайший путь
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="stationFrom"></param>
+        /// <param name="stationTo"></param>
+        /// <param name="currentLevel"></param>
+        /// <returns></returns>
         private List<IStation> FormPath(ITempStationsContainer container, IStation stationFrom, IStation stationTo, int currentLevel)
         {
             int level = currentLevel;
@@ -117,6 +123,13 @@ namespace Graph
             return path;
         }
 
+        /// <summary>
+        /// Задает уровень станции в графе
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="currentStation"></param>
+        /// <param name="currentLevel"></param>
+        /// <returns></returns>
         private int SetStationLevel(ITempStationsContainer container, IStation currentStation, int currentLevel)
         {
             foreach(IStation station in currentStation.GetConnectedStations())

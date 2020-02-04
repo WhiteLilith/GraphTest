@@ -113,16 +113,13 @@ namespace Graph
                 "Киевская"
             };
 
-            
-            IBranch stationsGreenBranch = CreateBranch(stationNamesGreen, "Замоскворецкая линия", 
-                                            "green", ref branch_id, ref stations_id);
-            IBranch stationsRedBranch = CreateBranch(stationsNamesRed, "Сокольническая линия",
-                                            "red", ref branch_id, ref stations_id);
-            IBranch stationsBlueBranch = CreateBranch(stationsNamesBlue, "Арбатско-покровская линия",
-                                            "blue", ref branch_id, ref stations_id);
-            IBranch stationsBrownBranch = CreateBranch(stationsNamesBrown, "Кольцевая линия",
-                                            "brown", ref branch_id, ref stations_id);
-            stationsBrownBranch.GetStationByName("Парк культуры").ConnectStation(stationsBrownBranch.GetStationByName("Киевская"), true);
+
+            IBranch stationsGreenBranch = new Branch("Замоскворецкая линия", "green", stationNamesGreen);
+            IBranch stationsRedBranch = new Branch("Сокольническая линия", "red", stationsNamesRed);
+            IBranch stationsBlueBranch = new Branch("Арбатско-покровская линия", "blue", stationsNamesBlue);
+            IBranch stationsBrownBranch = new Branch("Кольцевая линия", "brown", stationsNamesBrown);
+
+            Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Парк культуры"), stationsBrownBranch.GetStationByName("Киевская"));
 
 
             Branch.ConnectBranches(stationsRedBranch.GetStationByName("Охотный Ряд"),
@@ -159,46 +156,12 @@ namespace Graph
             IPathFinder pathFinder = new BreadthFirstSearch();
             
             List<IStation> path = pathFinder.FindPath(stationsBlueBranch.GetStationByName("Щёлковская"),
-                stationsGreenBranch.GetStationByName("Царицыно"), null);
+                stationsGreenBranch.GetStationByName("Царицыно"));
 
             foreach(var station in path)
             {
                 Console.WriteLine(station.GetStationName(), "\n");
             }
-        }
-
-        /// <summary>
-        /// Создание ветки
-        /// </summary>
-        /// <param name="stations"></param>
-        /// <param name="branchName"></param>
-        /// <param name="branchColor"></param>
-        /// <param name="branchID"></param>
-        /// <param name="stationsID"></param>
-        /// <returns></returns>
-        static IBranch CreateBranch(string[] stations, string branchName, 
-            string branchColor, ref int branchID, ref int stationsID)
-        {
-            List<IStation> stationsBranch = new List<IStation>(0);
-            for (int i = 0; i < stations.Length; i++, stationsID++)
-            {
-                if (i == 0 || i == stations.Length)
-                {
-                    stationsBranch.Add(new Station(stations[i], stationsID.ToString(), true));
-                }
-                else
-                {
-                    stationsBranch.Add(new Station(stations[i], stationsID.ToString(), false));
-                }
-                if (i > 0)
-                {
-                    stationsBranch[i - 1].ConnectStation(stationsBranch[i], true);
-                }
-            }
-
-            IBranch branch = new Branch(branchName, branchID.ToString(), branchColor, stationsBranch);
-            branchID++;
-            return branch;
         }
 
         /// <summary>

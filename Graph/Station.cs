@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Graph
 {
+    /// <summary>
+    /// Класс станции метро
+    /// </summary>
     class Station : IStation
     {
         private List<IStation> ConnectedStations;
@@ -11,10 +14,12 @@ namespace Graph
         private string id;
         private bool isEnd;
 
-        public Station(string name, string id, bool isEnd)
+        private static int global_id = 0;
+
+        public Station(string name, bool isEnd)
         {
             this.name = name;
-            this.id = id;
+            this.id = global_id++.ToString();
             this.isEnd = isEnd;
             ConnectedStations = new List<IStation>(0);
         }
