@@ -8,9 +8,6 @@ namespace Graph
     {
         static void Main(string[] args)
         {
-            int stations_id = 0;
-            int branch_id = 0;
-
             string[] stationNamesGreen = 
             {
                 "Ховрино",
@@ -176,7 +173,7 @@ namespace Graph
             {
                 Console.WriteLine(station.GetStationName(), "\n");
             }
-            Console.WriteLine($"\nВремя поездки:{destinationTime}");
+            Console.WriteLine($"\nПримерное время поездки: {destinationTime} минут");
         }
 
         /// <summary>
