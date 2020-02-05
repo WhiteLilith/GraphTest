@@ -24,7 +24,6 @@ namespace Graph
                 "Белорусская",
                 "Маяковская",
                 "Тверская",
-                "Горьковская",
                 "Театральная",
                 "Новокузнецкая",
                 "Павелецкая",
@@ -132,7 +131,6 @@ namespace Graph
             Branch.ConnectBranches(stationsRedBranch.GetStationByName("Библиотека имени Ленина"),
                 stationsBlueBranch.GetStationByName("Арбатская"));
 
-            
             Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Парк культуры"),
                 stationsRedBranch.GetStationByName("Парк культуры"));
 
@@ -170,10 +168,15 @@ namespace Graph
             List<IStation> path = pathFinder.FindPath(underground.GetStationByName(departureStation),
                 underground.GetStationByName(destinationStation));
 
+            int averageTime = 3;
+            int destinationTime = path.Count * averageTime;
+
+            Console.WriteLine("\n");
             foreach(var station in path)
             {
                 Console.WriteLine(station.GetStationName(), "\n");
             }
+            Console.WriteLine($"\nВремя поездки:{destinationTime}");
         }
 
         /// <summary>
