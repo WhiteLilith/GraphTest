@@ -4,17 +4,17 @@ using System.Text;
 
 namespace Graph
 {
-    class Undeground : IUnderground
+    class Underground : IUnderground
     {
-        List<IBranch> branches;
+        List<IBranch> branches = new List<IBranch>();
 
 
-        public Undeground()
+        public Underground()
         {
 
         }
 
-        public Undeground(List<IBranch> branches)
+        public Underground(List<IBranch> branches)
         {
             this.branches = branches;
         }

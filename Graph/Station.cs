@@ -18,7 +18,7 @@ namespace Graph
 
         public Station(string name, bool isEnd)
         {
-            this.name = name;
+            this.name = name.ToLower();
             this.id = global_id++.ToString();
             this.isEnd = isEnd;
             ConnectedStations = new List<IStation>(0);

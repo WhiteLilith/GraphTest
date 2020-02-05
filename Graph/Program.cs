@@ -119,7 +119,8 @@ namespace Graph
             IBranch stationsBlueBranch = new Branch("Арбатско-покровская линия", "blue", stationsNamesBlue);
             IBranch stationsBrownBranch = new Branch("Кольцевая линия", "brown", stationsNamesBrown);
 
-            Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Парк культуры"), stationsBrownBranch.GetStationByName("Киевская"));
+            Branch.ConnectBranches(stationsBrownBranch.GetStationByName("Парк культуры"), 
+                stationsBrownBranch.GetStationByName("Киевская"));
 
 
             Branch.ConnectBranches(stationsRedBranch.GetStationByName("Охотный Ряд"),
@@ -151,7 +152,7 @@ namespace Graph
                 stationsBlueBranch.GetStationByName("Киевская"));
 
 
-            IUnderground underground = new Undeground();
+            IUnderground underground = new Underground();
             underground.AddBranch(stationsBlueBranch);
             underground.AddBranch(stationsBrownBranch);
             underground.AddBranch(stationsGreenBranch);
@@ -161,9 +162,13 @@ namespace Graph
 
             IPathFinder pathFinder = new BreadthFirstSearch();
 
-            Console.Read();
-            List<IStation> path = pathFinder.FindPath(Undeground.GetStationByName("Щёлковская"),
-                Undeground.GetStationByName("Царицыно"));
+            Console.WriteLine("Укажите станцию отправления");
+            string departureStation = Console.ReadLine().ToLower();
+            Console.WriteLine("Укажите станцию назначения");
+            string destinationStation = Console.ReadLine().ToLower();
+
+            List<IStation> path = pathFinder.FindPath(underground.GetStationByName(departureStation),
+                underground.GetStationByName(destinationStation));
 
             foreach(var station in path)
             {

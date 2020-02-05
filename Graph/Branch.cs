@@ -18,7 +18,7 @@ namespace Graph
 
         public Branch(string name, string color, string[] stations)
         {
-            this.name = name;
+            this.name = name.ToLower();
             this.color = color;
             id = branch_id++.ToString();
 
@@ -49,9 +49,10 @@ namespace Graph
 
         public IStation GetStationByName(string name)
         {
+            string formattedName = name.ToLower();
             foreach (IStation station in stations)
             {
-                if (station.GetStationName() == name)
+                if (station.GetStationName() == formattedName)
                 {
                     return station;
                 }
@@ -104,7 +105,7 @@ namespace Graph
             this.stations = stationsBranch;
         }
 
-        List<IStation> GetAllStations()
+        public List<IStation> GetAllStations()
         {
             return stations;
         }
