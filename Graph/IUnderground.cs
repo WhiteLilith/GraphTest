@@ -10,13 +10,13 @@ namespace Graph
 
         IBranch GetBranchByName(string branchName);
 
-        IBranch GetBranchID(string id);
+        IBranch GetBranchByID(string id);
 
         IStation GetStationByName(string stationName);
 
         IStation GetStationByID(string id);
 
-        List<IStation> GetAllStations(string branchName);
+        List<IStation> GetAllStationsByName(string branchName);
 
         List<IStation> GetAllStationsByID(string id);
     }

@@ -16,5 +16,9 @@ namespace Graph
         }
 
         List<IStation> GetAllStations();
+
+        string GetBranchID();
+
+        string GetBranchName();
     }
 }
