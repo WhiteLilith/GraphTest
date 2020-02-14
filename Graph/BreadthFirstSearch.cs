@@ -54,8 +54,6 @@ namespace Graph
 
                 if (IsPathFound) break;
             }
-
-
             return FormPath(pathContainer, stationFrom, stationTo, currentLevel);
         }
 
